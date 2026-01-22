@@ -1,0 +1,667 @@
+[
+  {
+    "id": "pkg-1",
+    "destinationId": "dest-1",
+    "name": "Maldives Beach Escape",
+    "duration": 5,
+    "price": 85000,
+    "description": "A luxurious 5-day beach vacation with overwater villa stay, snorkeling, and spa treatments in the Maldives.",
+    "category": "leisure",
+    "itinerary": [
+      "Arrival and transfer to overwater villa",
+      "Beach day and sunset cruise",
+      "Snorkeling and reef exploration",
+      "Spa day and water sports",
+      "Departure"
+    ],
+    "inclusions": [
+      "5-star overwater villa",
+      "Daily breakfast and dinner",
+      "Airport transfers",
+      "Snorkeling equipment",
+      "Sunset cruise"
+    ]
+  },
+  {
+    "id": "pkg-2",
+    "destinationId": "dest-1",
+    "name": "Maldives Honeymoon Retreat",
+    "duration": 6,
+    "price": 120000,
+    "description": "Romantic honeymoon package with private dinners, couple spa, and photography session.",
+    "category": "leisure",
+    "itinerary": [
+      "Romantic welcome and villa check-in",
+      "Private candlelight beach dinner",
+      "Island hopping tour",
+      "Couple spa therapy",
+      "Underwater restaurant experience",
+      "Departure"
+    ],
+    "inclusions": [
+      "Luxury water villa",
+      "All meals included",
+      "Private beach dinner",
+      "Couple spa session",
+      "Professional photoshoot"
+    ]
+  },
+  {
+    "id": "pkg-3",
+    "destinationId": "dest-1",
+    "name": "Maldives Adventure Getaway",
+    "duration": 4,
+    "price": 70000,
+    "description": "Short adventure trip with diving, jet-ski, and parasailing.",
+    "category": "adventure",
+    "itinerary": [
+      "Arrival and beach activities",
+      "Scuba diving experience",
+      "Jet-ski and parasailing",
+      "Departure"
+    ],
+    "inclusions": [
+      "Resort stay",
+      "Breakfast and one main meal",
+      "Diving session with instructor",
+      "Jet-ski and parasailing"
+    ]
+  },
+
+  {
+    "id": "pkg-4",
+    "destinationId": "dest-2",
+    "name": "Swiss Alps Ski Adventure",
+    "duration": 6,
+    "price": 95000,
+    "description": "Skiing holiday in the Swiss Alps with lessons and equipment included.",
+    "category": "adventure",
+    "itinerary": [
+      "Arrival and ski gear fitting",
+      "Beginner ski lessons",
+      "Full-day skiing on alpine slopes",
+      "Cable car ride and mountain photography",
+      "Village tour and cheese tasting",
+      "Departure"
+    ],
+    "inclusions": [
+      "Chalet accommodation",
+      "Daily breakfast and dinner",
+      "Ski equipment rental",
+      "Ski pass",
+      "Professional instructor"
+    ]
+  },
+  {
+    "id": "pkg-5",
+    "destinationId": "dest-2",
+    "name": "Swiss Scenic Rail Journey",
+    "duration": 5,
+    "price": 88000,
+    "description": "Panoramic rail trip through the Swiss Alps with scenic train passes.",
+    "category": "leisure",
+    "itinerary": [
+      "Arrival in Zurich and transfer to Lucerne",
+      "GoldenPass train to Interlaken",
+      "Jungfraujoch Top of Europe excursion",
+      "Glacier Express panoramic journey",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel stays in 2 cities",
+      "Swiss rail pass",
+      "Breakfast",
+      "Jungfraujoch excursion ticket"
+    ]
+  },
+  {
+    "id": "pkg-6",
+    "destinationId": "dest-2",
+    "name": "Alpine Family Holiday",
+    "duration": 7,
+    "price": 105000,
+    "description": "Family-friendly Swiss package with light hiking, lakeside picnics, and chocolate factory visit.",
+    "category": "family",
+    "itinerary": [
+      "Arrival and lakeside walk",
+      "Light hiking and picnic",
+      "Cable car to mountain viewpoint",
+      "Chocolate factory tour",
+      "Boat ride on Swiss lake",
+      "Free day for shopping",
+      "Departure"
+    ],
+    "inclusions": [
+      "Family room accommodation",
+      "Breakfast and selected dinners",
+      "Chocolate factory tickets",
+      "Boat ride tickets"
+    ]
+  },
+
+  {
+    "id": "pkg-7",
+    "destinationId": "dest-3",
+    "name": "Bali Cultural Highlights",
+    "duration": 6,
+    "price": 55000,
+    "description": "Temple visits, rice terraces, traditional dances, and local markets.",
+    "category": "cultural",
+    "itinerary": [
+      "Arrival and Ubud sightseeing",
+      "Tanah Lot and Uluwatu temples",
+      "Rice terrace trekking and coffee plantation",
+      "Traditional dance performance",
+      "Beach time in Seminyak",
+      "Departure"
+    ],
+    "inclusions": [
+      "Boutique hotel stay",
+      "Daily breakfast",
+      "Private driver-guide",
+      "Temple entry fees",
+      "Cultural show tickets"
+    ]
+  },
+  {
+    "id": "pkg-8",
+    "destinationId": "dest-3",
+    "name": "Bali Yoga & Wellness Retreat",
+    "duration": 5,
+    "price": 60000,
+    "description": "Relaxing retreat with yoga sessions, spa, and healthy meals in Ubud.",
+    "category": "wellness",
+    "itinerary": [
+      "Arrival and wellness orientation",
+      "Morning yoga and spa session",
+      "Nature walk and meditation",
+      "Cooking class with organic ingredients",
+      "Departure"
+    ],
+    "inclusions": [
+      "Retreat center stay",
+      "Vegetarian meals",
+      "Daily yoga classes",
+      "One spa treatment"
+    ]
+  },
+  {
+    "id": "pkg-9",
+    "destinationId": "dest-3",
+    "name": "Bali Beach & Adventure",
+    "duration": 4,
+    "price": 48000,
+    "description": "Mix of beach time, water sports, and nightlife in Bali.",
+    "category": "adventure",
+    "itinerary": [
+      "Arrival and beach sunset",
+      "Water sports in Nusa Dua",
+      "Beach club and nightlife",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel near beach",
+      "Breakfast",
+      "Water sports package",
+      "Airport transfers"
+    ]
+  },
+
+  {
+    "id": "pkg-10",
+    "destinationId": "dest-4",
+    "name": "Dubai City & Desert Combo",
+    "duration": 5,
+    "price": 78000,
+    "description": "Dubai city tour, Burj Khalifa, and desert safari with BBQ dinner.",
+    "category": "leisure",
+    "itinerary": [
+      "Arrival and Marina walk",
+      "City tour and Burj Khalifa visit",
+      "Desert safari with BBQ dinner",
+      "Shopping at Dubai Mall",
+      "Departure"
+    ],
+    "inclusions": [
+      "4-star hotel stay",
+      "Daily breakfast",
+      "Burj Khalifa ticket",
+      "Desert safari with dinner"
+    ]
+  },
+  {
+    "id": "pkg-11",
+    "destinationId": "dest-4",
+    "name": "Dubai Luxury Escape",
+    "duration": 4,
+    "price": 90000,
+    "description": "High-end experience with luxury hotel, yacht cruise, and fine dining.",
+    "category": "luxury",
+    "itinerary": [
+      "Arrival and check-in at luxury hotel",
+      "Private yacht cruise",
+      "Fine dining at premium restaurant",
+      "Departure"
+    ],
+    "inclusions": [
+      "5-star luxury accommodation",
+      "Breakfast",
+      "Private yacht cruise",
+      "Airport transfers"
+    ]
+  },
+  {
+    "id": "pkg-12",
+    "destinationId": "dest-4",
+    "name": "Dubai Adventure Thrills",
+    "duration": 5,
+    "price": 82000,
+    "description": "Skydiving over Palm Jumeirah, dune bashing, and zip line ride.",
+    "category": "adventure",
+    "itinerary": [
+      "Arrival and Dubai Marina evening",
+      "Skydiving over Palm Jumeirah",
+      "Desert dune bashing",
+      "Zip line experience and leisure time",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel stay",
+      "Breakfast",
+      "Skydiving experience",
+      "Desert safari"
+    ]
+  },
+
+  {
+    "id": "pkg-13",
+    "destinationId": "dest-5",
+    "name": "Santorini Romantic Getaway",
+    "duration": 5,
+    "price": 92000,
+    "description": "Romantic cave-hotel stay with caldera sunset views and wine tasting.",
+    "category": "leisure",
+    "itinerary": [
+      "Arrival and sunset in Oia",
+      "Caldera cruise",
+      "Wine tasting tour",
+      "Beach relaxation",
+      "Departure"
+    ],
+    "inclusions": [
+      "Cave hotel accommodation",
+      "Breakfast",
+      "Caldera cruise",
+      "Wine tasting tour"
+    ]
+  },
+  {
+    "id": "pkg-14",
+    "destinationId": "dest-5",
+    "name": "Santorini Photography Tour",
+    "duration": 4,
+    "price": 75000,
+    "description": "Guided photography sessions at iconic Santorini viewpoints.",
+    "category": "cultural",
+    "itinerary": [
+      "Arrival and blue-domed churches shoot",
+      "Sunrise and sunset photo walks",
+      "Village and beach photography",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel stay",
+      "Breakfast",
+      "Local photography guide"
+    ]
+  },
+  {
+    "id": "pkg-15",
+    "destinationId": "dest-5",
+    "name": "Santorini Island Explorer",
+    "duration": 6,
+    "price": 88000,
+    "description": "Island-wide tour covering villages, beaches, and archaeological sites.",
+    "category": "family",
+    "itinerary": [
+      "Arrival and Fira town walk",
+      "Oia village exploration",
+      "Red and Black sand beaches",
+      "Akrotiri archaeological site",
+      "Free day for shopping",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel stay",
+      "Breakfast",
+      "Island tour with guide"
+    ]
+  },
+
+  {
+    "id": "pkg-16",
+    "destinationId": "dest-6",
+    "name": "Tokyo Discovery Tour",
+    "duration": 7,
+    "price": 88000,
+    "description": "Mix of tradition and modern Tokyo with guided city tours.",
+    "category": "cultural",
+    "itinerary": [
+      "Arrival and Shibuya Crossing",
+      "Asakusa temple and Sumida river",
+      "Tokyo Skytree and Akihabara",
+      "Day trip to Nikko or Kamakura",
+      "Tsukiji Outer Market and sushi class",
+      "Free day for shopping",
+      "Departure"
+    ],
+    "inclusions": [
+      "Central hotel stay",
+      "Breakfast",
+      "City tour",
+      "Sushi making class"
+    ]
+  },
+  {
+    "id": "pkg-17",
+    "destinationId": "dest-6",
+    "name": "Tokyo Anime & Tech Trail",
+    "duration": 5,
+    "price": 76000,
+    "description": "Akihabara, Odaiba, anime shops, and tech museums.",
+    "category": "adventure",
+    "itinerary": [
+      "Arrival and Akihabara exploration",
+      "Odaiba and teamLab museum",
+      "Ikebukuro anime district",
+      "Gundam statue and shopping",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel stay",
+      "Breakfast",
+      "teamLab entry ticket"
+    ]
+  },
+  {
+    "id": "pkg-18",
+    "destinationId": "dest-6",
+    "name": "Tokyo & Mount Fuji Escape",
+    "duration": 6,
+    "price": 93000,
+    "description": "Tokyo sightseeing with a day trip to Mount Fuji and Hakone.",
+    "category": "leisure",
+    "itinerary": [
+      "Tokyo city highlights",
+      "Meiji Shrine and Harajuku",
+      "Mount Fuji 5th Station trip",
+      "Hakone ropeway and cruise",
+      "Shopping in Shinjuku",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel stay",
+      "Breakfast",
+      "Fuji-Hakone tour"
+    ]
+  },
+
+  {
+    "id": "pkg-19",
+    "destinationId": "dest-7",
+    "name": "New York First-Timer Highlights",
+    "duration": 5,
+    "price": 82000,
+    "description": "Essential NYC sights: Times Square, Central Park, Statue of Liberty, and museums.",
+    "category": "cultural",
+    "itinerary": [
+      "Arrival and Times Square night walk",
+      "Central Park and 5th Avenue",
+      "Statue of Liberty and Ellis Island",
+      "Museum visit and Broadway show",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel in Manhattan or nearby",
+      "Breakfast",
+      "Liberty cruise tickets"
+    ]
+  },
+  {
+    "id": "pkg-20",
+    "destinationId": "dest-7",
+    "name": "New York City Food & Neighborhoods",
+    "duration": 4,
+    "price": 70000,
+    "description": "Guided food tours through Brooklyn, Chinatown, and Little Italy.",
+    "category": "food",
+    "itinerary": [
+      "Arrival and midtown food tour",
+      "Brooklyn neighborhoods and street food",
+      "Chinatown and Little Italy tasting tour",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel stay",
+      "Breakfast",
+      "Two guided food tours"
+    ]
+  },
+  {
+    "id": "pkg-21",
+    "destinationId": "dest-7",
+    "name": "New York Shopping & Skyline",
+    "duration": 4,
+    "price": 68000,
+    "description": "Shopping-focused trip with observatory tickets and free time.",
+    "category": "leisure",
+    "itinerary": [
+      "Arrival and Times Square",
+      "Outlet mall or 5th Avenue shopping",
+      "Top of the Rock or One World Observatory",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel stay",
+      "Breakfast",
+      "Observatory ticket"
+    ]
+  },
+
+  {
+    "id": "pkg-22",
+    "destinationId": "dest-8",
+    "name": "Kerala Classic Backwaters",
+    "duration": 4,
+    "price": 38000,
+    "description": "Houseboat stay on the Alleppey backwaters with village visits.",
+    "category": "leisure",
+    "itinerary": [
+      "Arrival in Kochi and transfer to Alleppey",
+      "Full-day backwater cruise on houseboat",
+      "Village walk and canoe ride",
+      "Departure"
+    ],
+    "inclusions": [
+      "1 night in Kochi, 1 night on houseboat",
+      "All meals on houseboat",
+      "Backwater cruise"
+    ]
+  },
+  {
+    "id": "pkg-23",
+    "destinationId": "dest-8",
+    "name": "Kerala Nature & Backwaters",
+    "duration": 6,
+    "price": 52000,
+    "description": "Munnar hills plus Alleppey backwaters combo package.",
+    "category": "family",
+    "itinerary": [
+      "Arrival and transfer to Munnar",
+      "Munnar sightseeing and tea gardens",
+      "Drive to Alleppey",
+      "Houseboat cruise",
+      "Beach visit at Marari",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel in Munnar and Alleppey",
+      "One night in houseboat",
+      "Breakfast and one main meal"
+    ]
+  },
+  {
+    "id": "pkg-24",
+    "destinationId": "dest-8",
+    "name": "Kerala Ayurveda Retreat",
+    "duration": 7,
+    "price": 60000,
+    "description": "Ayurvedic treatments, yoga, and vegetarian meals by the backwaters.",
+    "category": "wellness",
+    "itinerary": [
+      "Arrival and doctor consultation",
+      "Daily ayurvedic therapies",
+      "Yoga and meditation sessions",
+      "Short village excursions",
+      "Departure"
+    ],
+    "inclusions": [
+      "Ayurveda resort stay",
+      "All meals (satvik)",
+      "Daily treatments",
+      "Yoga sessions"
+    ]
+  },
+
+  {
+    "id": "pkg-25",
+    "destinationId": "dest-9",
+    "name": "Paris Essentials",
+    "duration": 5,
+    "price": 90000,
+    "description": "Eiffel Tower, Seine cruise, Louvre Museum, and Montmartre.",
+    "category": "cultural",
+    "itinerary": [
+      "Arrival and evening Seine cruise",
+      "Eiffel Tower and Trocadéro",
+      "Louvre Museum and nearby sights",
+      "Montmartre and Sacré‑Cœur",
+      "Departure"
+    ],
+    "inclusions": [
+      "Central Paris hotel",
+      "Breakfast",
+      "Seine cruise",
+      "Eiffel Tower ticket (2nd level)"
+    ]
+  },
+  {
+    "id": "pkg-26",
+    "destinationId": "dest-9",
+    "name": "Romantic Paris Escape",
+    "duration": 4,
+    "price": 88000,
+    "description": "Romantic-focused trip with fine dining and evening walks.",
+    "category": "leisure",
+    "itinerary": [
+      "Arrival and evening walk along the Seine",
+      "Eiffel Tower visit and picnic in park",
+      "Free day for shopping and café hopping",
+      "Departure"
+    ],
+    "inclusions": [
+      "Boutique hotel stay",
+      "Breakfast",
+      "One romantic dinner"
+    ]
+  },
+  {
+    "id": "pkg-27",
+    "destinationId": "dest-9",
+    "name": "Paris Art & History Tour",
+    "duration": 6,
+    "price": 98000,
+    "description": "Deep dive into Parisian museums, palaces, and historic neighborhoods.",
+    "category": "cultural",
+    "itinerary": [
+      "City orientation tour",
+      "Full day at Louvre and Tuileries",
+      "Versailles Palace excursion",
+      "Latin Quarter and Notre-Dame area",
+      "Montmartre art walk",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel stay",
+      "Breakfast",
+      "Versailles tickets",
+      "Museum pass (selected days)"
+    ]
+  },
+
+  {
+    "id": "pkg-28",
+    "destinationId": "dest-10",
+    "name": "Sydney Highlights",
+    "duration": 5,
+    "price": 87000,
+    "description": "Sydney Opera House, Harbour Bridge, Bondi Beach, and coastal walk.",
+    "category": "leisure",
+    "itinerary": [
+      "Arrival and Circular Quay",
+      "Opera House tour and harbour cruise",
+      "Bondi to Coogee coastal walk",
+      "Free day for shopping",
+      "Departure"
+    ],
+    "inclusions": [
+      "City hotel stay",
+      "Breakfast",
+      "Opera House tour",
+      "Harbour cruise"
+    ]
+  },
+  {
+    "id": "pkg-29",
+    "destinationId": "dest-10",
+    "name": "Sydney & Blue Mountains",
+    "duration": 6,
+    "price": 93000,
+    "description": "Sydney city with day trip to Blue Mountains National Park.",
+    "category": "adventure",
+    "itinerary": [
+      "Sydney city tour",
+      "Bondi Beach visit",
+      "Blue Mountains trip with scenic rides",
+      "Taronga Zoo or free day",
+      "Leisure and shopping",
+      "Departure"
+    ],
+    "inclusions": [
+      "Hotel stay",
+      "Breakfast",
+      "Blue Mountains excursion"
+    ]
+  },
+  {
+    "id": "pkg-30",
+    "destinationId": "dest-10",
+    "name": "Sydney Family Holiday",
+    "duration": 5,
+    "price": 82000,
+    "description": "Family-friendly attractions including zoo, aquarium, and beaches.",
+    "category": "family",
+    "itinerary": [
+      "Arrival and Darling Harbour",
+      "Sydney Aquarium and Wildlife Zoo",
+      "Beach day and picnic",
+      "Free day for optional activities",
+      "Departure"
+    ],
+    "inclusions": [
+      "Family hotel room",
+      "Breakfast",
+      "Aquarium and zoo tickets"
+    ]
+  }
+]
