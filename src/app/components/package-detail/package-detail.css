@@ -1,0 +1,198 @@
+.package-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.back-btn {
+  background: none;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
+  transition: all 0.3s;
+}
+
+.back-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.package-header {
+  margin-bottom: 30px;
+}
+
+.package-header h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.destination-name {
+  font-size: 18px;
+  color: #666;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.image-section .main-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.price-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  height: fit-content;
+}
+
+.price-card h2 {
+  font-size: 36px;
+  margin: 0;
+}
+
+.per-person {
+  margin: 5px 0 15px 0;
+  opacity: 0.9;
+}
+
+.duration {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.btn-book {
+  width: 100%;
+  padding: 15px;
+  background-color: white;
+  color: #667eea;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s;
+}
+
+.btn-book:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.details-card {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.badge {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.badge-adventure {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.badge-leisure {
+  background-color: #4ecdc4;
+  color: white;
+}
+
+.badge-cultural {
+  background-color: #f7b731;
+  color: white;
+}
+
+.itinerary-section,
+.inclusions-section {
+  margin-bottom: 40px;
+}
+
+.itinerary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.itinerary-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 15px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.day-number {
+  background: #667eea;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.inclusions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.inclusion-item {
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.check-icon {
+  color: #4CAF50;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.loading {
+  text-align: center;
+  padding: 100px 20px;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .inclusions-grid {
+    grid-template-columns: 1fr;
+  }
+}

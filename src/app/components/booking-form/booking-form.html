@@ -1,0 +1,144 @@
+<div class="booking-container" *ngIf="package">
+  <div class="booking-header">
+    <h1>Book Your Trip</h1>
+    <p>Complete the form below to confirm your booking</p>
+  </div>
+
+  <div class="booking-content">
+    <!-- Package Summary -->
+    <div class="package-summary">
+      <h2>Package Summary</h2>
+      <div class="summary-card">
+        <h3>{{ package.name }}</h3>
+        <p class="duration">🕐 {{ package.duration }} Days / {{ package.duration - 1 }} Nights</p>
+        <p class="price">₹{{ package.price | number }} per person</p>
+        
+        <div class="travelers-info">
+          <p><strong>Number of Travelers:</strong> {{ bookingForm.get('travelers')?.value || 1 }}</p>
+          <p class="total-price">
+            <strong>Total Price:</strong> 
+            <span [ngStyle]="{ color: totalPrice > 100000 ? 'red' : 'green' }">
+              ₹{{ totalPrice | number }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking Form -->
+    <div class="form-section">
+      <h2>Traveler Details</h2>
+      <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Name Field -->
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input 
+            type="text" 
+            id="name" 
+            formControlName="name"
+            placeholder="Enter your full name"
+            [ngClass]="{'invalid': bookingForm.get('name')?.invalid && bookingForm.get('name')?.touched}"
+          />
+          <div class="error-message" *ngIf="bookingForm.get('name')?.invalid && bookingForm.get('name')?.touched">
+            <small *ngIf="bookingForm.get('name')?.errors?.['required']">Name is required</small>
+            <small *ngIf="bookingForm.get('name')?.errors?.['minlength']">Name must be at least 3 characters</small>
+          </div>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email"
+            placeholder="your.email@example.com"
+            [ngClass]="{'invalid': bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched}"
+          />
+          <div class="error-message" *ngIf="bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched">
+            <small *ngIf="bookingForm.get('email')?.errors?.['required']">Email is required</small>
+            <small *ngIf="bookingForm.get('email')?.errors?.['email']">Enter a valid email</small>
+          </div>
+        </div>
+
+        <!-- Phone Field -->
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input 
+            type="tel" 
+            id="phone" 
+            formControlName="phone"
+            placeholder="10-digit mobile number"
+            [ngClass]="{'invalid': bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched}"
+          />
+          <div class="error-message" *ngIf="bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched">
+            <small *ngIf="bookingForm.get('phone')?.errors?.['required']">Phone is required</small>
+            <small *ngIf="bookingForm.get('phone')?.errors?.['pattern']">Enter valid 10-digit number</small>
+          </div>
+        </div>
+
+        <!-- Travelers Field -->
+        <div class="form-group">
+          <label for="travelers">Number of Travelers *</label>
+          <input 
+            type="number" 
+            id="travelers" 
+            formControlName="travelers"
+            min="1" 
+            max="10"
+            [ngClass]="{'invalid': bookingForm.get('travelers')?.invalid && bookingForm.get('travelers')?.touched}"
+          />
+          <div class="error-message" *ngIf="bookingForm.get('travelers')?.invalid && bookingForm.get('travelers')?.touched">
+            <small>Must be between 1 and 10</small>
+          </div>
+        </div>
+
+        <!-- Travel Date Field -->
+        <div class="form-group">
+          <label for="travelDate">Travel Date *</label>
+          <input 
+            type="date" 
+            id="travelDate" 
+            formControlName="travelDate"
+            [ngClass]="{'invalid': bookingForm.get('travelDate')?.invalid && bookingForm.get('travelDate')?.touched}"
+          />
+          <div class="error-message" *ngIf="bookingForm.get('travelDate')?.invalid && bookingForm.get('travelDate')?.touched">
+            <small>Travel date is required</small>
+          </div>
+        </div>
+
+        <!-- Special Requests Field -->
+        <div class="form-group">
+          <label for="specialRequests">Special Requests (Optional)</label>
+          <textarea 
+            id="specialRequests" 
+            formControlName="specialRequests"
+            rows="4"
+            placeholder="Any special requirements or preferences..."
+          ></textarea>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="cancel()">
+            Cancel
+          </button>
+          <button 
+            type="submit" 
+            class="btn-submit" 
+            [disabled]="bookingForm.invalid || isSubmitting"
+            [ngClass]="{'disabled': bookingForm.invalid || isSubmitting}"
+          >
+            <span *ngIf="!isSubmitting">Confirm Booking</span>
+            <span *ngIf="isSubmitting">Processing...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="loading" *ngIf="!package">
+  <p>Loading booking form...</p>
+</div>

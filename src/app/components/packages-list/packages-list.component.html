@@ -1,0 +1,41 @@
+<div class="packages-container">
+  <button class="back-btn" routerLink="/destinations">← Back to Destinations</button>
+
+  <div class="header">
+    <h1>Packages for {{ destination?.name }}</h1>
+    <p>{{ destination?.country }}</p>
+  </div>
+
+  <div class="packages-grid" *ngIf="!loading && packages.length > 0">
+    <div class="package-card" *ngFor="let package of packages">
+      <div class="package-image">
+        <img [src]="'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400'" [alt]="package.name">
+      </div>
+
+      <div class="package-info">
+        <h3>{{ package.name }}</h3>
+        <p class="description">{{ package.description }}</p>
+
+        <div class="meta">
+          <span class="duration">🕐 {{ package.duration }} Days</span>
+          <span class="category">{{ package.category | uppercase }}</span>
+        </div>
+
+        <div class="footer">
+          <span class="price">₹{{ package.price | number }}</span>
+          <button class="btn-view" (click)="viewPackageDetail(package.id)">
+            View Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty" *ngIf="!loading && packages.length === 0">
+    <p>No packages available for this destination.</p>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <p>Loading packages...</p>
+  </div>
+</div>

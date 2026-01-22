@@ -1,0 +1,72 @@
+<div class="package-detail-container" *ngIf="!loading">
+  <button class="back-btn" routerLink="/destinations">← Back to Destinations</button>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="package && destination" class="package-content">
+    <!-- Package header -->
+    <div class="package-header">
+      <h1>{{ package.name }}</h1>
+      <p class="destination-name">📍 {{ destination.name }}, {{ destination.country }}</p>
+    </div>
+
+    <div class="main-content">
+      <!-- Image section -->
+      <div class="image-section">
+        <img [src]="destination.image" [alt]="package.name" class="main-image">
+      </div>
+
+      <!-- Price card -->
+      <div class="price-card">
+        <h2>₹{{ package.price | number }}</h2>
+        <p class="per-person">per person</p>
+        <p class="duration">🕐 {{ package.duration }} Days / {{ package.duration - 1 }} Nights</p>
+        <button class="btn-book" (click)="bookNow()">Book Now</button>
+      </div>
+    </div>
+
+    <!-- Details -->
+    <div class="details-card">
+      <h3>Package Details</h3>
+      <p>{{ package.description }}</p>
+      
+      <div class="category">
+        <span class="badge" [ngClass]="{
+          'badge-adventure': package.category === 'adventure',
+          'badge-leisure': package.category === 'leisure',
+          'badge-cultural': package.category === 'cultural'
+        }">
+          {{ package.category | uppercase }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Itinerary -->
+    <div class="itinerary-section" *ngIf="package.itinerary && package.itinerary.length > 0">
+      <h2>Day-by-Day Itinerary</h2>
+      <div class="itinerary-list">
+        <div class="itinerary-item" *ngFor="let day of package.itinerary; let i = index">
+          <div class="day-number">Day {{ i + 1 }}</div>
+          <div class="day-content">{{ day }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inclusions -->
+    <div class="inclusions-section" *ngIf="package.inclusions && package.inclusions.length > 0">
+      <h2>What's Included</h2>
+      <div class="inclusions-grid">
+        <div class="inclusion-item" *ngFor="let inclusion of package.inclusions">
+          <span class="check-icon">✓</span>
+          {{ inclusion }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading" *ngIf="loading">
+  <p>Loading package details...</p>
+</div>

@@ -1,0 +1,46 @@
+<div class="destination-container">
+  <h1>Explore Destinations</h1>
+
+  <!-- Search box with two-way data binding -->
+  <div class="search-box">
+    <input
+      type="text"
+      placeholder="Search destinations..."
+      [(ngModel)]="searchQuery"
+    />
+  </div>
+
+  <!-- Grid of destination cards -->
+  <div class="destinations-grid">
+    <!-- *ngFor directive - loops through each destination -->
+    <div
+      class="destination-card"
+      *ngFor="let destination of filteredDestinations"
+      [ngClass]="{'highlight': destination.rating > 4.5}"
+    >
+      <!-- Property binding [src] and interpolation {{ }} -->
+      <img [src]="destination.image" [alt]="destination.name">
+
+      <div class="card-content">
+        <h3>{{ destination.name }}</h3>
+        <p class="location">{{ destination.country }}</p>
+        <p class="summary">{{ destination.summary }}</p>
+        
+        <!-- [ngStyle] directive - dynamic styling -->
+        <p class="rating" [ngStyle]="{ color: destination.rating > 4.5 ? 'green' : 'orange' }">
+          ⭐ Rating: {{ destination.rating }} ({{ destination.reviews }} reviews)
+        </p>
+
+        <!-- Event binding (click) -->
+        <button (click)="viewPackages(destination.id)" class="btn-primary">
+          View Packages
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- *ngIf directive - shows only if no destinations -->
+  <div *ngIf="filteredDestinations.length === 0" class="no-results">
+    <p>No destinations found.</p>
+  </div>
+</div>
