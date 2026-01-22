@@ -1,4 +1,4 @@
-<img width="1893" height="843" alt="image" src="https://github.com/user-attachments/assets/b2f172e7-4ecc-43df-9991-53fa119488b6" />
+
 # TravelBookingExplorer
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
@@ -15,6 +15,8 @@ ng serve
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+<img width="1893" height="843" alt="image" src="https://github.com/user-attachments/assets/b2f172e7-4ecc-43df-9991-53fa119488b6" />
 
 ## Code scaffolding
 
