@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "id":  "dest-1",
         "name":  "Cape Town Coastal Escape",
@@ -147,7 +147,7 @@
         "name":  "Vancouver Coastal Mountains",
         "region":  "North America",
         "country":  "Canada",
-        "image":  "https://images.unsplash.com/photo-1549880181-56a44cf4a9a3?auto=format\u0026fit=crop\u0026w=1200\u0026q=80",
+        "image":  "https://picsum.photos/seed/vancouver-coastal-mountains/1200/800",
         "summary":  "Harbor city vibes, alpine day trips, and nature-meets-urban travel",
         "description":  "Vancouver blends waterfront neighborhoods with mountain scenery and outdoor-friendly planning. It supports balanced itineraries with city culture, food scenes, and scenic excursions.",
         "rating":  4.8,
@@ -158,7 +158,7 @@
         "name":  "Banff Rocky Mountain Trails",
         "region":  "North America",
         "country":  "Canada",
-        "image":  "https://images.unsplash.com/photo-1508261305437-4d8f6dbb5a5c?auto=format\u0026fit=crop\u0026w=1200\u0026q=80",
+        "image":  "https://picsum.photos/seed/banff-rocky-mountain-trails/1200/800",
         "summary":  "Turquoise lakes, mountain trails, and national park adventures",
         "description":  "Banff is a signature mountain destination for travelers who prioritize natural beauty, clean air, and activity-based itineraries. The region offers exceptional landscapes and guided outdoor routes.",
         "rating":  4.9,

@@ -9,15 +9,33 @@
     <p>{{ destination?.country }}</p>
   </header>
 
-  <mat-form-field appearance="outline" class="category-filter" *ngIf="categories.length">
-    <mat-label>Category</mat-label>
-    <mat-select [(value)]="selectedCategory">
-      <mat-option value="all">All categories</mat-option>
-      <mat-option *ngFor="let category of categories" [value]="category">
-        {{ category | titlecase }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <section class="control-row" *ngIf="categories.length">
+    <mat-form-field appearance="outline" class="category-filter">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="selectedCategory">
+        <mat-option value="all">All categories</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{ category | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="sort-filter">
+      <mat-label>Sort by</mat-label>
+      <mat-select [(ngModel)]="selectedSort">
+        <mat-option value="recommended">Recommended</mat-option>
+        <mat-option value="priceLowHigh">Price: Low to High</mat-option>
+        <mat-option value="priceHighLow">Price: High to Low</mat-option>
+        <mat-option value="durationLowHigh">Duration: Low to High</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-slide-toggle [(ngModel)]="showFavoritesOnly">Favorites only</mat-slide-toggle>
+
+    <button mat-flat-button color="accent" type="button" (click)="surprisePackage()">Surprise Package</button>
+  </section>
+
+  <p class="result-count" *ngIf="!loading && !errorMessage">{{ filteredPackages.length }} packages found</p>
 
   <div class="state" *ngIf="loading">
     <mat-spinner diameter="40"></mat-spinner>
@@ -35,13 +53,43 @@
       *ngFor="let travelPackage of filteredPackages"
       [appHighlightOffer]="travelPackage.price <= 60000 ? 'promo' : ''"
     >
-      <mat-card-header>
-        <mat-card-title>{{ travelPackage.name }}</mat-card-title>
-        <mat-card-subtitle>{{ travelPackage.category | titlecase }}</mat-card-subtitle>
-      </mat-card-header>
+      <img
+        mat-card-image
+        [src]="travelPackage.image"
+        [alt]="travelPackage.name"
+        loading="lazy"
+        (error)="handleImageError($event, travelPackage.id)"
+      />
 
       <mat-card-content>
-        <p>{{ travelPackage.description }}</p>
+        <div class="card-head-row">
+          <div>
+            <h3>{{ travelPackage.name }}</h3>
+            <p class="category">{{ travelPackage.category | titlecase }}</p>
+          </div>
+          <button
+            mat-icon-button
+            type="button"
+            [class.favorited]="isFavorite(travelPackage.id)"
+            (click)="toggleFavorite(travelPackage.id)"
+            aria-label="Toggle favorite"
+          >
+            <mat-icon>{{ isFavorite(travelPackage.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+          </button>
+        </div>
+
+        <p class="description">{{ getDescriptionText(travelPackage) }}</p>
+
+        <button
+          mat-button
+          type="button"
+          class="show-toggle"
+          *ngIf="travelPackage.description.length > 210"
+          (click)="toggleDescription(travelPackage.id)"
+        >
+          {{ isDescriptionExpanded(travelPackage.id) ? 'Show less' : 'Show more' }}
+        </button>
+
         <mat-chip-set>
           <mat-chip>{{ travelPackage.duration }} Days</mat-chip>
           <mat-chip color="accent">{{ travelPackage.price | currency: 'INR' : 'symbol' : '1.0-0' }}</mat-chip>
@@ -57,7 +105,7 @@
 
     <mat-card class="empty" *ngIf="filteredPackages.length === 0">
       <mat-card-content>
-        <p>No packages found for this category.</p>
+        <p>No packages found for the selected filters.</p>
       </mat-card-content>
     </mat-card>
   </section>

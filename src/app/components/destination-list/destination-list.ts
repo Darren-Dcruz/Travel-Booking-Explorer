@@ -16,7 +16,6 @@ import { DestinationService } from '../../services/destination.service';
 import { PackageService } from '../../services/package.service';
 import { Destination } from '../../models/destination.model';
 import { Package } from '../../models/package.model';
-import { DestinationFilterPipe } from '../../pipes/destination-filter.pipe';
 import { HighlightOfferDirective } from '../../directives/highlight-offer.directive';
 
 @Component({
@@ -33,13 +32,14 @@ import { HighlightOfferDirective } from '../../directives/highlight-offer.direct
     MatIconModule,
     MatChipsModule,
     MatProgressSpinnerModule,
-    DestinationFilterPipe,
     HighlightOfferDirective,
   ],
   templateUrl: './destination-list.html',
   styleUrls: ['./destination-list.css'],
 })
 export class DestinationListComponent implements OnInit {
+  private readonly fallbackBaseUrl = 'https://picsum.photos/seed';
+
   destinations: Destination[] = [];
   countries: string[] = [];
 
@@ -93,6 +93,49 @@ export class DestinationListComponent implements OnInit {
 
   viewPackages(destinationId: string): void {
     this.router.navigate(['/packages', destinationId]);
+  }
+
+  pickRandomDestination(): void {
+    if (!this.visibleDestinations.length) {
+      return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * this.visibleDestinations.length);
+    this.viewPackages(this.visibleDestinations[randomIndex].id);
+  }
+
+  handleImageError(event: Event, destinationId: string): void {
+    const imageElement = event.target as HTMLImageElement | null;
+
+    if (!imageElement || imageElement.dataset['fallbackApplied'] === 'true') {
+      return;
+    }
+
+    imageElement.dataset['fallbackApplied'] = 'true';
+    imageElement.src = `${this.fallbackBaseUrl}/${destinationId}-destination-fallback/1200/800`;
+  }
+
+  get visibleDestinations(): Destination[] {
+    const query = this.searchQuery.trim().toLowerCase();
+
+    return this.destinations.filter((destination) => {
+      const matchesQuery =
+        !query ||
+        destination.name.toLowerCase().includes(query) ||
+        destination.country.toLowerCase().includes(query) ||
+        destination.summary.toLowerCase().includes(query);
+
+      const matchesCountry = this.selectedCountry === 'all' || destination.country === this.selectedCountry;
+
+      const matchesBudget =
+        this.maxBudget === null ||
+        destination.startingPrice === undefined ||
+        destination.startingPrice <= this.maxBudget;
+
+      const matchesRating = destination.rating >= this.minRating;
+
+      return matchesQuery && matchesCountry && matchesBudget && matchesRating;
+    });
   }
 
   clearFilters(): void {

@@ -10,12 +10,18 @@
     <a mat-button routerLink="/register" routerLinkActive="active-link">Register</a>
   </nav>
 
-  <div class="toolbar-actions" *ngIf="user$ | async as user">
-    <span class="welcome">{{ user.name }}</span>
-    <button mat-stroked-button color="accent" *ngIf="isLoggedIn$ | async" (click)="logout()">
+  <div class="toolbar-actions">
+    <button mat-stroked-button class="theme-toggle" (click)="toggleTheme()" type="button">
+      <mat-icon>{{ (isDarkTheme$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      {{ (isDarkTheme$ | async) ? 'Light' : 'Dark' }}
+    </button>
+
+    <span class="welcome" *ngIf="user$ | async as user">{{ user.name }}</span>
+
+    <button mat-stroked-button color="accent" *ngIf="isLoggedIn$ | async" (click)="logout()" type="button">
       Logout
     </button>
-    <button mat-stroked-button color="accent" *ngIf="!(isLoggedIn$ | async)" (click)="loginDemo()">
+    <button mat-stroked-button color="accent" *ngIf="!(isLoggedIn$ | async)" (click)="loginDemo()" type="button">
       Demo Login
     </button>
   </div>

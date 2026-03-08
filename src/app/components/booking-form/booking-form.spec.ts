@@ -44,6 +44,7 @@ describe('BookingFormComponent', () => {
                 id: 'pkg-1',
                 destinationId: 'dest-1',
                 name: 'Mock Package',
+                image: 'https://picsum.photos/seed/mock-package/1200/800',
                 duration: 5,
                 price: 50000,
                 description: 'desc',

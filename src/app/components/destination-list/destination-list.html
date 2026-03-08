@@ -37,6 +37,10 @@
     <button mat-stroked-button color="primary" type="button" (click)="clearFilters()">
       Reset Filters
     </button>
+
+    <button mat-flat-button color="accent" type="button" (click)="pickRandomDestination()">
+      Surprise Me
+    </button>
   </section>
 
   <div class="state" *ngIf="loading">
@@ -52,10 +56,16 @@
   <section class="destination-grid" *ngIf="!loading && !errorMessage">
     <mat-card
       class="destination-card"
-      *ngFor="let destination of destinations | destinationFilter: searchQuery : selectedCountry : maxBudget : minRating"
+      *ngFor="let destination of visibleDestinations"
       [appHighlightOffer]="destination.rating >= 4.85 ? 'top-rated' : destination.startingPrice !== undefined && destination.startingPrice <= 60000 ? 'promo' : ''"
     >
-      <img mat-card-image [src]="destination.image" [alt]="destination.name" />
+      <img
+        mat-card-image
+        [src]="destination.image"
+        [alt]="destination.name"
+        loading="lazy"
+        (error)="handleImageError($event, destination.id)"
+      />
       <mat-card-header>
         <mat-card-title>{{ destination.name }}</mat-card-title>
         <mat-card-subtitle>{{ destination.country }}</mat-card-subtitle>
@@ -84,7 +94,7 @@
 
     <mat-card
       class="empty-state"
-      *ngIf="(destinations | destinationFilter: searchQuery : selectedCountry : maxBudget : minRating).length === 0"
+      *ngIf="visibleDestinations.length === 0"
     >
       <mat-card-content>
         <p>No destinations match the current filters.</p>

@@ -20,6 +20,8 @@ import { Destination } from '../../models/destination.model';
   styleUrls: ['./package-detail.css'],
 })
 export class PackageDetailComponent implements OnInit {
+  private readonly fallbackBaseUrl = 'https://picsum.photos/seed';
+
   packageData: Package | undefined;
   destination: Destination | undefined;
 
@@ -78,5 +80,16 @@ export class PackageDetailComponent implements OnInit {
     }
 
     this.router.navigate(['/booking', this.packageData.id]);
+  }
+
+  handleImageError(event: Event): void {
+    const imageElement = event.target as HTMLImageElement | null;
+
+    if (!imageElement || imageElement.dataset['fallbackApplied'] === 'true' || !this.packageData) {
+      return;
+    }
+
+    imageElement.dataset['fallbackApplied'] = 'true';
+    imageElement.src = `${this.fallbackBaseUrl}/${this.packageData.id}-detail-fallback/1200/800`;
   }
 }

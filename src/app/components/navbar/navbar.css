@@ -39,6 +39,12 @@
   gap: 0.65rem;
 }
 
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
 .welcome {
   font-size: 0.85rem;
   color: #e0f7fa;
@@ -64,6 +70,7 @@
 
   .toolbar-actions {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
+    flex-wrap: wrap;
   }
 }
