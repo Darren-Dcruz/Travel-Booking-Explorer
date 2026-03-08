@@ -1,144 +1,90 @@
-<div class="booking-container" *ngIf="package">
-  <div class="booking-header">
-    <h1>Book Your Trip</h1>
-    <p>Complete the form below to confirm your booking</p>
+﻿<section class="booking-page" *ngIf="packageData; else missingPackage">
+  <header>
+    <h1>Complete Your Booking</h1>
+    <p>{{ packageData.name }} | {{ destinationName }}</p>
+  </header>
+
+  <div class="layout">
+    <mat-card class="summary-card">
+      <mat-card-header>
+        <mat-card-title>Summary</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p><strong>Duration:</strong> {{ packageData.duration }} days</p>
+        <p><strong>Price per traveler:</strong> {{ packageData.price | currency: 'INR' : 'symbol' : '1.0-0' }}</p>
+        <p><strong>Total:</strong> {{ totalPrice | currency: 'INR' : 'symbol' : '1.0-0' }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Traveler Details</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Full Name</mat-label>
+              <input matInput formControlName="name" />
+              <mat-error *ngIf="controlError('name')?.['required']">Name is required.</mat-error>
+              <mat-error *ngIf="controlError('name')?.['minlength']">Name must be at least 3 characters.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="email" />
+              <mat-error *ngIf="controlError('email')?.['required']">Email is required.</mat-error>
+              <mat-error *ngIf="controlError('email')?.['email']">Enter a valid email address.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Phone</mat-label>
+              <input matInput formControlName="phone" />
+              <mat-error *ngIf="controlError('phone')?.['required']">Phone is required.</mat-error>
+              <mat-error *ngIf="controlError('phone')?.['pattern']">Enter a 10-digit phone number.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Travelers</mat-label>
+              <mat-select formControlName="travelers">
+                <mat-option *ngFor="let count of travelerOptions" [value]="count">{{ count }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Travel Date</mat-label>
+              <input matInput type="date" formControlName="travelDate" />
+              <mat-error *ngIf="controlError('travelDate')?.['required']">Travel date is required.</mat-error>
+              <mat-error *ngIf="controlError('travelDate')?.['pastDate']">Choose today or a future date.</mat-error>
+              <mat-error *ngIf="controlError('travelDate')?.['tooFar']">Date must be within one year.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Special Requests</mat-label>
+              <textarea matInput rows="3" formControlName="specialRequests"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="actions">
+            <button mat-stroked-button type="button" (click)="cancel()">Cancel</button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="isSubmitting">
+              <mat-icon *ngIf="!isSubmitting">check_circle</mat-icon>
+              <span>{{ isSubmitting ? 'Processing...' : 'Confirm Booking' }}</span>
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
   </div>
+</section>
 
-  <div class="booking-content">
-    <!-- Package Summary -->
-    <div class="package-summary">
-      <h2>Package Summary</h2>
-      <div class="summary-card">
-        <h3>{{ package.name }}</h3>
-        <p class="duration">🕐 {{ package.duration }} Days / {{ package.duration - 1 }} Nights</p>
-        <p class="price">₹{{ package.price | number }} per person</p>
-        
-        <div class="travelers-info">
-          <p><strong>Number of Travelers:</strong> {{ bookingForm.get('travelers')?.value || 1 }}</p>
-          <p class="total-price">
-            <strong>Total Price:</strong> 
-            <span [ngStyle]="{ color: totalPrice > 100000 ? 'red' : 'green' }">
-              ₹{{ totalPrice | number }}
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Booking Form -->
-    <div class="form-section">
-      <h2>Traveler Details</h2>
-      <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
-        
-        <!-- Name Field -->
-        <div class="form-group">
-          <label for="name">Full Name *</label>
-          <input 
-            type="text" 
-            id="name" 
-            formControlName="name"
-            placeholder="Enter your full name"
-            [ngClass]="{'invalid': bookingForm.get('name')?.invalid && bookingForm.get('name')?.touched}"
-          />
-          <div class="error-message" *ngIf="bookingForm.get('name')?.invalid && bookingForm.get('name')?.touched">
-            <small *ngIf="bookingForm.get('name')?.errors?.['required']">Name is required</small>
-            <small *ngIf="bookingForm.get('name')?.errors?.['minlength']">Name must be at least 3 characters</small>
-          </div>
-        </div>
-
-        <!-- Email Field -->
-        <div class="form-group">
-          <label for="email">Email Address *</label>
-          <input 
-            type="email" 
-            id="email" 
-            formControlName="email"
-            placeholder="your.email@example.com"
-            [ngClass]="{'invalid': bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched}"
-          />
-          <div class="error-message" *ngIf="bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched">
-            <small *ngIf="bookingForm.get('email')?.errors?.['required']">Email is required</small>
-            <small *ngIf="bookingForm.get('email')?.errors?.['email']">Enter a valid email</small>
-          </div>
-        </div>
-
-        <!-- Phone Field -->
-        <div class="form-group">
-          <label for="phone">Phone Number *</label>
-          <input 
-            type="tel" 
-            id="phone" 
-            formControlName="phone"
-            placeholder="10-digit mobile number"
-            [ngClass]="{'invalid': bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched}"
-          />
-          <div class="error-message" *ngIf="bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched">
-            <small *ngIf="bookingForm.get('phone')?.errors?.['required']">Phone is required</small>
-            <small *ngIf="bookingForm.get('phone')?.errors?.['pattern']">Enter valid 10-digit number</small>
-          </div>
-        </div>
-
-        <!-- Travelers Field -->
-        <div class="form-group">
-          <label for="travelers">Number of Travelers *</label>
-          <input 
-            type="number" 
-            id="travelers" 
-            formControlName="travelers"
-            min="1" 
-            max="10"
-            [ngClass]="{'invalid': bookingForm.get('travelers')?.invalid && bookingForm.get('travelers')?.touched}"
-          />
-          <div class="error-message" *ngIf="bookingForm.get('travelers')?.invalid && bookingForm.get('travelers')?.touched">
-            <small>Must be between 1 and 10</small>
-          </div>
-        </div>
-
-        <!-- Travel Date Field -->
-        <div class="form-group">
-          <label for="travelDate">Travel Date *</label>
-          <input 
-            type="date" 
-            id="travelDate" 
-            formControlName="travelDate"
-            [ngClass]="{'invalid': bookingForm.get('travelDate')?.invalid && bookingForm.get('travelDate')?.touched}"
-          />
-          <div class="error-message" *ngIf="bookingForm.get('travelDate')?.invalid && bookingForm.get('travelDate')?.touched">
-            <small>Travel date is required</small>
-          </div>
-        </div>
-
-        <!-- Special Requests Field -->
-        <div class="form-group">
-          <label for="specialRequests">Special Requests (Optional)</label>
-          <textarea 
-            id="specialRequests" 
-            formControlName="specialRequests"
-            rows="4"
-            placeholder="Any special requirements or preferences..."
-          ></textarea>
-        </div>
-
-        <!-- Form Actions -->
-        <div class="form-actions">
-          <button type="button" class="btn-cancel" (click)="cancel()">
-            Cancel
-          </button>
-          <button 
-            type="submit" 
-            class="btn-submit" 
-            [disabled]="bookingForm.invalid || isSubmitting"
-            [ngClass]="{'disabled': bookingForm.invalid || isSubmitting}"
-          >
-            <span *ngIf="!isSubmitting">Confirm Booking</span>
-            <span *ngIf="isSubmitting">Processing...</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div class="loading" *ngIf="!package">
-  <p>Loading booking form...</p>
-</div>
+<ng-template #missingPackage>
+  <mat-card>
+    <mat-card-content>
+      <p>Package not found. Please choose a destination and try again.</p>
+      <button mat-flat-button color="primary" routerLink="/destinations">Browse Destinations</button>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

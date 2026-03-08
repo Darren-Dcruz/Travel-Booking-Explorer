@@ -1,65 +1,71 @@
+﻿# Travel Booking and Destination Explorer
 
-# TravelBookingExplorer
+Angular + TypeScript single-page application for browsing destinations, viewing package details, and booking trips.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+## What Is Implemented
 
-## Deployement Link 
-- To checkout our website click on:[Travel Booking](https://travel-booking-explorer.vercel.app/)
+The project now covers all 9 required approaches:
 
-## Development server
+1. Setup and TypeScript fundamentals (interfaces/models already present)
+2. Modular component architecture (destination list, package list/detail, booking form, dashboard, navbar)
+3. Routing and navigation
+   - Route params: `/packages/:id`, `/package/:id`, `/booking/:id`
+   - Child routes under package detail: `overview`, `itinerary`, `reviews`
+   - Auth guard on `/dashboard`
+4. Services and Dependency Injection
+   - `DestinationService`, `PackageService`, `BookingService`, `UserService`
+   - HTTP data loading + mock booking API flow via interceptor
+5. Forms and validation
+   - Template-driven registration form (`/register`)
+   - Reactive booking form with inline validation + date-range validation
+6. Custom pipes and directives
+   - `destinationFilter` pipe (country/cost/popularity filters)
+   - `appHighlightOffer` directive (top-rated/promotional highlighting)
+7. Angular Material UI
+   - Material toolbar, cards, table, tabs, dialog, form fields, select, buttons, icons
+   - Booking confirmation dialog + expansion panels
+8. Observables, HTTP interceptors, and error handling
+   - Reactive booking stream via `BehaviorSubject`
+   - Global loading interceptor + global error interceptor
+   - Snackbar notifications for success/error
+9. Integration and testing
+   - Service + form + app shell tests
+   - Build and tests validated
 
-To start a local development server, run:
+## Architecture Flow
 
-```bash
-ng serve
-```
+1. `DestinationListComponent` loads destinations + packages and computes starting prices.
+2. User opens destination packages via `/packages/:destinationId`.
+3. User opens package detail via `/package/:packageId/overview` and navigates child tabs.
+4. User books via `/booking/:packageId`.
+5. Booking is submitted through `BookingService` to `/mock-api/bookings` handled by `mockApiInterceptor`.
+6. `UserDashboardComponent` consumes booking observable updates in real time.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Tech Stack
 
-<img width="1893" height="843" alt="image" src="https://github.com/user-attachments/assets/b2f172e7-4ecc-43df-9991-53fa119488b6" />
+- Angular 21 (standalone components)
+- TypeScript
+- RxJS
+- Angular Material
+- Vitest (via Angular test builder)
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+## Run Locally
 
 ```bash
-ng e2e
+npm install
+npm run start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Open: `http://localhost:4200`
 
-## Additional Resources
+## Build and Test
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm run build
+npm run test -- --watch=false
+```
+
+## Notes
+
+- A lightweight local storage fallback is used for environments where `localStorage` is unavailable.
+- Booking API is mocked through an HTTP interceptor so no external backend is required.

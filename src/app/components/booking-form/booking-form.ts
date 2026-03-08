@@ -1,97 +1,205 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 import { PackageService } from '../../services/package.service';
 import { BookingService } from '../../services/booking.service';
 import { UserService } from '../../services/user.service';
+import { DestinationService } from '../../services/destination.service';
+import { NotificationService } from '../../services/notification.service';
 import { Package } from '../../models/package.model';
 import { Booking } from '../../models/booking.model';
+import { User } from '../../models/user.model';
+import { BookingConfirmationDialogComponent } from '../booking-confirmation-dialog/booking-confirmation-dialog.component';
+
+function travelDateRangeValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+
+  if (!value) {
+    return null;
+  }
+
+  const selectedDate = new Date(value);
+  selectedDate.setHours(0, 0, 0, 0);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const maxDate = new Date(today);
+  maxDate.setFullYear(today.getFullYear() + 1);
+
+  if (selectedDate < today) {
+    return { pastDate: true };
+  }
+
+  if (selectedDate > maxDate) {
+    return { tooFar: true };
+  }
+
+  return null;
+}
 
 @Component({
   selector: 'app-booking-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './booking-form.html',
-  styleUrls: ['./booking-form.css']
+  styleUrls: ['./booking-form.css'],
 })
 export class BookingFormComponent implements OnInit {
-  bookingForm!: FormGroup;
-  package: Package | undefined;
-  currentUser: any;
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly packageService = inject(PackageService);
+  private readonly bookingService = inject(BookingService);
+  private readonly userService = inject(UserService);
+  private readonly destinationService = inject(DestinationService);
+  private readonly notifications = inject(NotificationService);
+  private readonly dialog = inject(MatDialog);
+
+  readonly travelerOptions = Array.from({ length: 10 }, (_, index) => index + 1);
+
+  bookingForm: FormGroup = this.formBuilder.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+    travelers: [1, [Validators.required, Validators.min(1), Validators.max(10)]],
+    travelDate: ['', [Validators.required, travelDateRangeValidator]],
+    specialRequests: [''],
+  });
+
+  packageData: Package | undefined;
+  currentUser: User | null = null;
+  destinationName = '';
+
   isSubmitting = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private packageService: PackageService,
-    private bookingService: BookingService,
-    private userService: UserService
-  ) {}
-
   ngOnInit(): void {
-    // Get current user
-    this.userService.getCurrentUser().subscribe(user => {
+    this.userService.getCurrentUser().subscribe((user) => {
       this.currentUser = user;
-    });
 
-    // Get package details
-    const packageId = this.route.snapshot.paramMap.get('id');
-    if (packageId) {
-      this.packageService.getPackageById(packageId).subscribe(pkg => {
-        this.package = pkg;
+      if (!user) {
+        return;
+      }
+
+      this.bookingForm.patchValue({
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
       });
-    }
-
-    // Initialize form with validation
-    this.bookingForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      travelers: [1, [Validators.required, Validators.min(1), Validators.max(10)]],
-      travelDate: ['', Validators.required],
-      specialRequests: ['']
     });
+
+    this.route.paramMap
+      .pipe(
+        switchMap((params) => {
+          const packageId = params.get('id');
+          return packageId ? this.packageService.getPackageById(packageId) : of(undefined);
+        }),
+        tap((travelPackage) => {
+          this.packageData = travelPackage;
+        }),
+        switchMap((travelPackage) =>
+          travelPackage
+            ? this.destinationService.getDestinationById(travelPackage.destinationId)
+            : of(undefined),
+        ),
+      )
+      .subscribe((destination) => {
+        this.destinationName = destination?.name ?? '';
+      });
   }
 
   get totalPrice(): number {
-    if (!this.package) return 0;
-    const travelers = this.bookingForm.get('travelers')?.value || 1;
-    return this.package.price * travelers;
+    if (!this.packageData) {
+      return 0;
+    }
+
+    const travelers = Number(this.bookingForm.get('travelers')?.value ?? 1);
+    return this.packageData.price * travelers;
+  }
+
+  controlError(controlName: string): ValidationErrors | null {
+    const control = this.bookingForm.get(controlName);
+
+    if (!control || !control.touched || !control.invalid) {
+      return null;
+    }
+
+    return control.errors;
   }
 
   onSubmit(): void {
-    if (this.bookingForm.valid && this.package && this.currentUser) {
-      this.isSubmitting = true;
-
-      const booking: Booking = {
-        id: 'booking-' + Date.now(),
-        userId: this.currentUser.id,
-        packageId: this.package.id,
-        destinationId: this.package.destinationId,
-        packageName: this.package.name,
-        destinationName: '',
-        travelers: this.bookingForm.value.travelers,
-        travelDate: this.bookingForm.value.travelDate,
-        totalPrice: this.totalPrice,
-        status: 'confirmed',
-        bookingDate: new Date().toISOString()
-      };
-
-      this.bookingService.addBooking(booking);
-
-      setTimeout(() => {
-        this.isSubmitting = false;
-        alert('Booking confirmed! 🎉');
-        this.router.navigate(['/my-bookings']);
-      }, 1000);
-    } else {
-      alert('Please fill all required fields correctly.');
+    if (this.bookingForm.invalid || !this.packageData || !this.currentUser) {
+      this.bookingForm.markAllAsTouched();
+      this.notifications.error('Please fix validation errors before submitting.');
+      return;
     }
+
+    this.isSubmitting = true;
+
+    const booking: Booking = {
+      id: `booking-${Date.now()}`,
+      userId: this.currentUser.id,
+      packageId: this.packageData.id,
+      destinationId: this.packageData.destinationId,
+      packageName: this.packageData.name,
+      destinationName: this.destinationName,
+      travelers: Number(this.bookingForm.value.travelers),
+      travelDate: String(this.bookingForm.value.travelDate),
+      totalPrice: this.totalPrice,
+      specialRequests: String(this.bookingForm.value.specialRequests || '').trim(),
+      status: 'confirmed',
+      bookingDate: new Date().toISOString(),
+    };
+
+    this.bookingService.addBooking(booking).subscribe({
+      next: (savedBooking) => {
+        this.isSubmitting = false;
+        this.notifications.success('Booking created successfully.');
+
+        this.dialog
+          .open(BookingConfirmationDialogComponent, {
+            data: savedBooking,
+            disableClose: true,
+          })
+          .afterClosed()
+          .subscribe(() => {
+            this.router.navigate(['/dashboard']);
+          });
+      },
+      error: () => {
+        this.isSubmitting = false;
+        this.notifications.error('Booking failed. Please try once again.');
+      },
+    });
   }
 
   cancel(): void {
-    this.router.navigate(['/packages', this.package?.id]);
+    if (!this.packageData) {
+      this.router.navigate(['/destinations']);
+      return;
+    }
+
+    this.router.navigate(['/package', this.packageData.id, 'overview']);
   }
 }

@@ -1,4 +1,4 @@
-export interface Package {
+﻿export interface Package {
   id: string;
   destinationId: string;
   name: string;

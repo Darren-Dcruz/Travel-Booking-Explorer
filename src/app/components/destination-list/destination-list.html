@@ -1,46 +1,94 @@
-<div class="destination-container">
-  <h1>Explore Destinations</h1>
+﻿<section class="destination-page">
+  <header class="page-header">
+    <h1>Explore Destinations</h1>
+    <p>Filter by country, cost, and popularity to find the right package.</p>
+  </header>
 
-  <!-- Search box with two-way data binding -->
-  <div class="search-box">
-    <input
-      type="text"
-      placeholder="Search destinations..."
-      [(ngModel)]="searchQuery"
-    />
+  <section class="filters" aria-label="Destination filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Search destination</mat-label>
+      <input matInput [(ngModel)]="searchQuery" placeholder="Try Bali or Maldives" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Country</mat-label>
+      <mat-select [(ngModel)]="selectedCountry">
+        <mat-option value="all">All countries</mat-option>
+        <mat-option *ngFor="let country of countries" [value]="country">{{ country }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Max budget (INR)</mat-label>
+      <mat-select [(ngModel)]="maxBudget">
+        <mat-option [value]="null">No budget cap</mat-option>
+        <mat-option *ngFor="let budget of budgetOptions" [value]="budget">{{ budget | currency: 'INR' : 'symbol' : '1.0-0' }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Minimum rating</mat-label>
+      <mat-select [(ngModel)]="minRating">
+        <mat-option *ngFor="let rating of ratingOptions" [value]="rating">{{ rating }}+</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-stroked-button color="primary" type="button" (click)="clearFilters()">
+      Reset Filters
+    </button>
+  </section>
+
+  <div class="state" *ngIf="loading">
+    <mat-spinner diameter="42"></mat-spinner>
+    <p>Loading destinations...</p>
   </div>
 
-  <!-- Grid of destination cards -->
-  <div class="destinations-grid">
-    <!-- *ngFor directive - loops through each destination -->
-    <div
+  <div class="state error" *ngIf="!loading && errorMessage">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <section class="destination-grid" *ngIf="!loading && !errorMessage">
+    <mat-card
       class="destination-card"
-      *ngFor="let destination of filteredDestinations"
-      [ngClass]="{'highlight': destination.rating > 4.5}"
+      *ngFor="let destination of destinations | destinationFilter: searchQuery : selectedCountry : maxBudget : minRating"
+      [appHighlightOffer]="destination.rating >= 4.85 ? 'top-rated' : destination.startingPrice !== undefined && destination.startingPrice <= 60000 ? 'promo' : ''"
     >
-      <!-- Property binding [src] and interpolation {{ }} -->
-      <img [src]="destination.image" [alt]="destination.name">
+      <img mat-card-image [src]="destination.image" [alt]="destination.name" />
+      <mat-card-header>
+        <mat-card-title>{{ destination.name }}</mat-card-title>
+        <mat-card-subtitle>{{ destination.country }}</mat-card-subtitle>
+      </mat-card-header>
 
-      <div class="card-content">
-        <h3>{{ destination.name }}</h3>
-        <p class="location">{{ destination.country }}</p>
-        <p class="summary">{{ destination.summary }}</p>
-        
-        <!-- [ngStyle] directive - dynamic styling -->
-        <p class="rating" [ngStyle]="{ color: destination.rating > 4.5 ? 'green' : 'orange' }">
-          ⭐ Rating: {{ destination.rating }} ({{ destination.reviews }} reviews)
-        </p>
+      <mat-card-content>
+        <p>{{ destination.summary }}</p>
+        <mat-chip-set>
+          <mat-chip>
+            <mat-icon matChipAvatar>star</mat-icon>
+            {{ destination.rating }} / 5
+          </mat-chip>
+          <mat-chip>{{ destination.reviews | number }} reviews</mat-chip>
+          <mat-chip *ngIf="destination.startingPrice">
+            From {{ destination.startingPrice | currency: 'INR' : 'symbol' : '1.0-0' }}
+          </mat-chip>
+        </mat-chip-set>
+      </mat-card-content>
 
-        <!-- Event binding (click) -->
-        <button (click)="viewPackages(destination.id)" class="btn-primary">
+      <mat-card-actions>
+        <button mat-flat-button color="primary" type="button" (click)="viewPackages(destination.id)">
           View Packages
         </button>
-      </div>
-    </div>
-  </div>
+      </mat-card-actions>
+    </mat-card>
 
-  <!-- *ngIf directive - shows only if no destinations -->
-  <div *ngIf="filteredDestinations.length === 0" class="no-results">
-    <p>No destinations found.</p>
-  </div>
-</div>
+    <mat-card
+      class="empty-state"
+      *ngIf="(destinations | destinationFilter: searchQuery : selectedCountry : maxBudget : minRating).length === 0"
+    >
+      <mat-card-content>
+        <p>No destinations match the current filters.</p>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</section>

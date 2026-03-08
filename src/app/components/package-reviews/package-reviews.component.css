@@ -1,0 +1,17 @@
+﻿.reviews-grid {
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.8rem;
+}
+
+.stars {
+  color: #fbc02d;
+  margin-bottom: 0.5rem;
+}
+
+.stars mat-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+}

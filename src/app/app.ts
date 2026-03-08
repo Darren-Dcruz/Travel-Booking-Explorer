@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NavbarComponent } from './components/navbar/navbar';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
-  template: `
-    <app-navbar></app-navbar>
-    <router-outlet></router-outlet>
-  `,
-  styles: []
+  imports: [CommonModule, RouterOutlet, NavbarComponent, MatProgressBarModule],
+  templateUrl: './app.html',
+  styleUrls: ['./app.css'],
 })
 export class AppComponent {
-  title = 'travel-booking-explorer';
+  private readonly loadingService = inject(LoadingService);
+  readonly loading$ = this.loadingService.isLoading$;
 }

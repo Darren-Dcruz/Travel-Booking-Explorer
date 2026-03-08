@@ -1,0 +1,22 @@
+﻿<mat-card *ngIf="packageData">
+  <mat-card-header>
+    <mat-card-title>Package Overview</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{ packageData.description }}</p>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Inclusions</mat-panel-title>
+          <mat-panel-description>{{ packageData.inclusions.length }} items</mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <ul>
+          <li *ngFor="let inclusion of packageData.inclusions">{{ inclusion }}</li>
+        </ul>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+</mat-card>

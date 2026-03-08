@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+﻿@import '@angular/material/prebuilt-themes/cyan-orange.css';
+
+:root {
+  --surface-bg: #fffdf3;
+  --card-radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--surface-bg);
+}
+
+body {
+  color: #263238;
+}
+
+mat-card {
+  border-radius: var(--card-radius) !important;
+}
+
+.snackbar-success {
+  --mdc-snackbar-container-color: #2e7d32;
+  --mat-snack-bar-button-color: #ffffff;
+}
+
+.snackbar-error {
+  --mdc-snackbar-container-color: #c62828;
+  --mat-snack-bar-button-color: #ffffff;
+}

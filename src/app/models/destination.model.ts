@@ -1,11 +1,12 @@
-export interface Destination {
+﻿export interface Destination {
   id: string;
   name: string;
-  region: string;
+  region?: string;
   country: string;
   image: string;
   summary: string;
   description: string;
   rating: number;
   reviews: number;
+  startingPrice?: number;
 }

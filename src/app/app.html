@@ -1,2 +1,12 @@
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
+﻿<app-navbar></app-navbar>
+
+<mat-progress-bar
+  *ngIf="loading$ | async"
+  class="global-loader"
+  color="accent"
+  mode="indeterminate"
+></mat-progress-bar>
+
+<main class="page-shell">
+  <router-outlet></router-outlet>
+</main>

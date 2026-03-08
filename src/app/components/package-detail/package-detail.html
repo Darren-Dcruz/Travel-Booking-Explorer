@@ -1,72 +1,50 @@
-<div class="package-detail-container" *ngIf="!loading">
-  <button class="back-btn" routerLink="/destinations">← Back to Destinations</button>
+﻿<section class="package-detail" *ngIf="!loading">
+  <button mat-button type="button" [routerLink]="['/packages', packageData?.destinationId]">
+    <mat-icon>arrow_back</mat-icon>
+    Back to packages
+  </button>
 
-  <div *ngIf="error" class="error-message">
-    <p>{{ error }}</p>
-  </div>
+  <mat-card *ngIf="packageData && destination; else errorTemplate" class="summary-card">
+    <mat-card-header>
+      <mat-card-title>{{ packageData.name }}</mat-card-title>
+      <mat-card-subtitle>{{ destination.name }}, {{ destination.country }}</mat-card-subtitle>
+    </mat-card-header>
 
-  <div *ngIf="package && destination" class="package-content">
-    <!-- Package header -->
-    <div class="package-header">
-      <h1>{{ package.name }}</h1>
-      <p class="destination-name">📍 {{ destination.name }}, {{ destination.country }}</p>
-    </div>
-
-    <div class="main-content">
-      <!-- Image section -->
-      <div class="image-section">
-        <img [src]="destination.image" [alt]="package.name" class="main-image">
-      </div>
-
-      <!-- Price card -->
-      <div class="price-card">
-        <h2>₹{{ package.price | number }}</h2>
-        <p class="per-person">per person</p>
-        <p class="duration">🕐 {{ package.duration }} Days / {{ package.duration - 1 }} Nights</p>
-        <button class="btn-book" (click)="bookNow()">Book Now</button>
-      </div>
-    </div>
-
-    <!-- Details -->
-    <div class="details-card">
-      <h3>Package Details</h3>
-      <p>{{ package.description }}</p>
-      
-      <div class="category">
-        <span class="badge" [ngClass]="{
-          'badge-adventure': package.category === 'adventure',
-          'badge-leisure': package.category === 'leisure',
-          'badge-cultural': package.category === 'cultural'
-        }">
-          {{ package.category | uppercase }}
-        </span>
-      </div>
-    </div>
-
-    <!-- Itinerary -->
-    <div class="itinerary-section" *ngIf="package.itinerary && package.itinerary.length > 0">
-      <h2>Day-by-Day Itinerary</h2>
-      <div class="itinerary-list">
-        <div class="itinerary-item" *ngFor="let day of package.itinerary; let i = index">
-          <div class="day-number">Day {{ i + 1 }}</div>
-          <div class="day-content">{{ day }}</div>
+    <mat-card-content>
+      <div class="summary-grid">
+        <div>
+          <p>{{ packageData.description }}</p>
+        </div>
+        <div class="price-box">
+          <p class="price">{{ packageData.price | currency: 'INR' : 'symbol' : '1.0-0' }}</p>
+          <p>{{ packageData.duration }} Days / {{ packageData.duration - 1 }} Nights</p>
+          <button mat-flat-button color="primary" type="button" (click)="bookNow()">Book Now</button>
         </div>
       </div>
-    </div>
+    </mat-card-content>
+  </mat-card>
 
-    <!-- Inclusions -->
-    <div class="inclusions-section" *ngIf="package.inclusions && package.inclusions.length > 0">
-      <h2>What's Included</h2>
-      <div class="inclusions-grid">
-        <div class="inclusion-item" *ngFor="let inclusion of package.inclusions">
-          <span class="check-icon">✓</span>
-          {{ inclusion }}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" *ngIf="packageData" class="child-nav">
+    <a mat-tab-link routerLink="overview" routerLinkActive #overviewRla="routerLinkActive" [active]="overviewRla.isActive">Overview</a>
+    <a mat-tab-link routerLink="itinerary" routerLinkActive #itineraryRla="routerLinkActive" [active]="itineraryRla.isActive">Itinerary</a>
+    <a mat-tab-link routerLink="reviews" routerLinkActive #reviewsRla="routerLinkActive" [active]="reviewsRla.isActive">Reviews</a>
+  </nav>
+
+  <mat-tab-nav-panel #tabPanel>
+    <router-outlet></router-outlet>
+  </mat-tab-nav-panel>
+</section>
 
 <div class="loading" *ngIf="loading">
   <p>Loading package details...</p>
 </div>
+
+<ng-template #errorTemplate>
+  <mat-card class="error-card">
+    <mat-card-content>
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ errorMessage }}</p>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+

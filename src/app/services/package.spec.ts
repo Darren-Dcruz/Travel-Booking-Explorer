@@ -1,16 +1,58 @@
-import { TestBed } from '@angular/core/testing';
+﻿import { TestBed } from '@angular/core/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { PackageService } from './package.service';
 
-import { Package } from './package';
-
-describe('Package', () => {
-  let service: Package;
+describe('PackageService', () => {
+  let service: PackageService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Package);
+    TestBed.configureTestingModule({
+      providers: [PackageService, provideHttpClient(), provideHttpClientTesting()],
+    });
+
+    service = TestBed.inject(PackageService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  afterEach(() => {
+    httpMock.verify();
+  });
+
+  it('filters packages by destination id', () => {
+    const mockPackages = [
+      {
+        id: 'pkg-1',
+        destinationId: 'dest-1',
+        name: 'Package One',
+        duration: 4,
+        price: 1000,
+        description: 'a',
+        itinerary: ['day'],
+        inclusions: ['hotel'],
+        category: 'leisure',
+      },
+      {
+        id: 'pkg-2',
+        destinationId: 'dest-2',
+        name: 'Package Two',
+        duration: 5,
+        price: 2000,
+        description: 'b',
+        itinerary: ['day'],
+        inclusions: ['hotel'],
+        category: 'adventure',
+      },
+    ];
+
+    service.getPackagesByDestination('dest-1').subscribe((packages) => {
+      expect(packages.length).toBe(1);
+      expect(packages[0].id).toBe('pkg-1');
+    });
+
+    const request = httpMock.expectOne('assets/data/packages.json');
+    expect(request.request.method).toBe('GET');
+    request.flush(mockPackages);
   });
 });
