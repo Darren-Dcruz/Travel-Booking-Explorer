@@ -1,0 +1,12 @@
+﻿<h2 mat-dialog-title>Booking Confirmed</h2>
+
+<mat-dialog-content>
+  <p>Your trip is confirmed for {{ booking.packageName }}.</p>
+  <p><strong>Travel Date:</strong> {{ booking.travelDate | date: 'mediumDate' }}</p>
+  <p><strong>Total:</strong> {{ booking.totalPrice | currency: 'INR' : 'symbol' : '1.0-0' }}</p>
+  <p><strong>Booking ID:</strong> {{ booking.id }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">Go to Dashboard</button>
+</mat-dialog-actions>

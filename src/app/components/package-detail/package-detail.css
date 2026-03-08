@@ -1,0 +1,53 @@
+﻿.package-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.summary-card {
+  border-left: 4px solid #00695c;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.price-box {
+  background: #f1f8e9;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.child-nav {
+  background: #fafafa;
+  border-radius: 0.5rem;
+}
+
+.error-card {
+  border: 1px solid #ef9a9a;
+  color: #b71c1c;
+}
+
+.loading {
+  min-height: 160px;
+  display: grid;
+  place-items: center;
+}
+
+@media (max-width: 768px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}

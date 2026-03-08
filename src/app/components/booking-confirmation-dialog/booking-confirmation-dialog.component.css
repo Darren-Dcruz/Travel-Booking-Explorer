@@ -1,0 +1,9 @@
+﻿mat-dialog-content {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 260px;
+}
+
+p {
+  margin: 0;
+}

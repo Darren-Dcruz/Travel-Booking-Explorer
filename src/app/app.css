@@ -1,0 +1,27 @@
+﻿:host {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fff8e1 0%, #fffde7 45%, #ffffff 100%);
+}
+
+.global-loader {
+  position: sticky;
+  top: 64px;
+  z-index: 1500;
+}
+
+.page-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .global-loader {
+    top: 56px;
+  }
+
+  .page-shell {
+    padding: 1rem;
+  }
+}

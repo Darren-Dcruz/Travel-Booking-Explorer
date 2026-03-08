@@ -1,0 +1,22 @@
+﻿<mat-toolbar color="primary" class="toolbar">
+  <a class="brand" routerLink="/destinations">
+    <mat-icon>travel_explore</mat-icon>
+    <span>Travel Booking Explorer</span>
+  </a>
+
+  <nav class="nav-links">
+    <a mat-button routerLink="/destinations" routerLinkActive="active-link">Destinations</a>
+    <a mat-button routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
+    <a mat-button routerLink="/register" routerLinkActive="active-link">Register</a>
+  </nav>
+
+  <div class="toolbar-actions" *ngIf="user$ | async as user">
+    <span class="welcome">{{ user.name }}</span>
+    <button mat-stroked-button color="accent" *ngIf="isLoggedIn$ | async" (click)="logout()">
+      Logout
+    </button>
+    <button mat-stroked-button color="accent" *ngIf="!(isLoggedIn$ | async)" (click)="loginDemo()">
+      Demo Login
+    </button>
+  </div>
+</mat-toolbar>

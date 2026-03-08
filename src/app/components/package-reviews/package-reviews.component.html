@@ -1,0 +1,23 @@
+﻿<section class="reviews-grid" *ngIf="reviews.length; else emptyReviews">
+  <mat-card *ngFor="let review of reviews">
+    <mat-card-header>
+      <mat-card-title>{{ review.author }}</mat-card-title>
+      <mat-card-subtitle>{{ review.date | date: 'mediumDate' }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="stars">
+        <mat-icon *ngFor="let _ of getStars(review.rating)">star</mat-icon>
+      </div>
+      <p>{{ review.comment }}</p>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<ng-template #emptyReviews>
+  <mat-card>
+    <mat-card-content>
+      <p>No reviews yet for this package.</p>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

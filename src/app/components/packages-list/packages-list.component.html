@@ -1,0 +1,64 @@
+﻿<section class="packages-page">
+  <button mat-button type="button" routerLink="/destinations">
+    <mat-icon>arrow_back</mat-icon>
+    Back to destinations
+  </button>
+
+  <header>
+    <h1>Packages for {{ destination?.name || 'Selected Destination' }}</h1>
+    <p>{{ destination?.country }}</p>
+  </header>
+
+  <mat-form-field appearance="outline" class="category-filter" *ngIf="categories.length">
+    <mat-label>Category</mat-label>
+    <mat-select [(value)]="selectedCategory">
+      <mat-option value="all">All categories</mat-option>
+      <mat-option *ngFor="let category of categories" [value]="category">
+        {{ category | titlecase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="state" *ngIf="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading packages...</p>
+  </div>
+
+  <div class="state error" *ngIf="!loading && errorMessage">
+    <mat-icon>error</mat-icon>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <section class="package-grid" *ngIf="!loading && !errorMessage">
+    <mat-card
+      class="package-card"
+      *ngFor="let travelPackage of filteredPackages"
+      [appHighlightOffer]="travelPackage.price <= 60000 ? 'promo' : ''"
+    >
+      <mat-card-header>
+        <mat-card-title>{{ travelPackage.name }}</mat-card-title>
+        <mat-card-subtitle>{{ travelPackage.category | titlecase }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>{{ travelPackage.description }}</p>
+        <mat-chip-set>
+          <mat-chip>{{ travelPackage.duration }} Days</mat-chip>
+          <mat-chip color="accent">{{ travelPackage.price | currency: 'INR' : 'symbol' : '1.0-0' }}</mat-chip>
+        </mat-chip-set>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-flat-button color="primary" type="button" (click)="viewPackageDetail(travelPackage.id)">
+          View Details
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="empty" *ngIf="filteredPackages.length === 0">
+      <mat-card-content>
+        <p>No packages found for this category.</p>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</section>

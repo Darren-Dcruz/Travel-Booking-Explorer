@@ -1,0 +1,50 @@
+﻿<section class="package-detail" *ngIf="!loading">
+  <button mat-button type="button" [routerLink]="['/packages', packageData?.destinationId]">
+    <mat-icon>arrow_back</mat-icon>
+    Back to packages
+  </button>
+
+  <mat-card *ngIf="packageData && destination; else errorTemplate" class="summary-card">
+    <mat-card-header>
+      <mat-card-title>{{ packageData.name }}</mat-card-title>
+      <mat-card-subtitle>{{ destination.name }}, {{ destination.country }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="summary-grid">
+        <div>
+          <p>{{ packageData.description }}</p>
+        </div>
+        <div class="price-box">
+          <p class="price">{{ packageData.price | currency: 'INR' : 'symbol' : '1.0-0' }}</p>
+          <p>{{ packageData.duration }} Days / {{ packageData.duration - 1 }} Nights</p>
+          <button mat-flat-button color="primary" type="button" (click)="bookNow()">Book Now</button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" *ngIf="packageData" class="child-nav">
+    <a mat-tab-link routerLink="overview" routerLinkActive #overviewRla="routerLinkActive" [active]="overviewRla.isActive">Overview</a>
+    <a mat-tab-link routerLink="itinerary" routerLinkActive #itineraryRla="routerLinkActive" [active]="itineraryRla.isActive">Itinerary</a>
+    <a mat-tab-link routerLink="reviews" routerLinkActive #reviewsRla="routerLinkActive" [active]="reviewsRla.isActive">Reviews</a>
+  </nav>
+
+  <mat-tab-nav-panel #tabPanel>
+    <router-outlet></router-outlet>
+  </mat-tab-nav-panel>
+</section>
+
+<div class="loading" *ngIf="loading">
+  <p>Loading package details...</p>
+</div>
+
+<ng-template #errorTemplate>
+  <mat-card class="error-card">
+    <mat-card-content>
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ errorMessage }}</p>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+
