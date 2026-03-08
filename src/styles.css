@@ -1,8 +1,15 @@
-﻿@import '@angular/material/prebuilt-themes/cyan-orange.css';
+﻿@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 :root {
-  --surface-bg: #fffdf3;
-  --card-radius: 12px;
+  --app-bg: #edf3fb;
+  --app-surface: #ffffff;
+  --app-surface-soft: #f7fbff;
+  --app-text: #102033;
+  --app-text-muted: #455468;
+  --app-border: #cfd9e6;
+  --app-primary: #0f766e;
+  --app-primary-dark: #0b5b55;
+  --card-radius: 14px;
 }
 
 * {
@@ -15,23 +22,88 @@ body {
   padding: 0;
   min-height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--surface-bg);
+  background: linear-gradient(160deg, #eef5ff 0%, #f8fbff 45%, #eef7f6 100%);
+  color: var(--app-text);
 }
 
 body {
-  color: #263238;
+  line-height: 1.4;
 }
 
+/* Strong global readability overrides for Material components */
+.mat-mdc-card,
 mat-card {
+  background: var(--app-surface) !important;
+  color: var(--app-text) !important;
+  border: 1px solid var(--app-border);
   border-radius: var(--card-radius) !important;
+  box-shadow: 0 8px 22px rgba(15, 35, 65, 0.08) !important;
+}
+
+.mat-mdc-card-subtitle,
+.mat-mdc-card-content,
+.mat-mdc-card-title,
+.mat-mdc-card p,
+.mat-mdc-card span,
+.mat-mdc-card li {
+  color: inherit !important;
+}
+
+.mat-mdc-form-field .mdc-text-field {
+  background-color: #ffffff !important;
+}
+
+.mat-mdc-form-field .mdc-floating-label,
+.mat-mdc-form-field .mat-mdc-select-value,
+.mat-mdc-form-field .mat-mdc-select-arrow,
+.mat-mdc-form-field input,
+.mat-mdc-form-field textarea,
+.mat-mdc-form-field .mat-mdc-form-field-hint {
+  color: #1f2937 !important;
+}
+
+.mat-mdc-form-field .mdc-notched-outline__leading,
+.mat-mdc-form-field .mdc-notched-outline__notch,
+.mat-mdc-form-field .mdc-notched-outline__trailing {
+  border-color: #9fb0c5 !important;
+}
+
+.mat-mdc-chip {
+  background-color: #f1f5fb !important;
+  color: #1d2f45 !important;
+  border: 1px solid #d5dfeb;
+}
+
+.mdc-tab__text-label {
+  color: #1d2f45 !important;
+  font-weight: 600;
+}
+
+.mdc-tab--active .mdc-tab__text-label {
+  color: var(--app-primary) !important;
+}
+
+.mat-mdc-row,
+.mat-mdc-header-row,
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  color: #1f2937 !important;
+}
+
+.mdc-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-button {
+  font-weight: 600;
 }
 
 .snackbar-success {
-  --mdc-snackbar-container-color: #2e7d32;
+  --mdc-snackbar-container-color: #1f7a38;
   --mat-snack-bar-button-color: #ffffff;
 }
 
 .snackbar-error {
-  --mdc-snackbar-container-color: #c62828;
+  --mdc-snackbar-container-color: #b91c1c;
   --mat-snack-bar-button-color: #ffffff;
 }
