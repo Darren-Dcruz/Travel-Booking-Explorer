@@ -55,8 +55,18 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Travel Date</mat-label>
-              <input matInput type="date" formControlName="travelDate" />
+              <input
+                matInput
+                [matDatepicker]="travelDatePicker"
+                [min]="minTravelDate"
+                [max]="maxTravelDate"
+                formControlName="travelDate"
+                placeholder="Select travel date"
+              />
+              <mat-datepicker-toggle matSuffix [for]="travelDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #travelDatePicker></mat-datepicker>
               <mat-error *ngIf="controlError('travelDate')?.['required']">Travel date is required.</mat-error>
+              <mat-error *ngIf="controlError('travelDate')?.['invalidDate']">Choose a valid date from calendar.</mat-error>
               <mat-error *ngIf="controlError('travelDate')?.['pastDate']">Choose today or a future date.</mat-error>
               <mat-error *ngIf="controlError('travelDate')?.['tooFar']">Date must be within one year.</mat-error>
             </mat-form-field>

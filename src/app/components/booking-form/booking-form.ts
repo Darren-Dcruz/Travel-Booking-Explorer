@@ -12,6 +12,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { PackageService } from '../../services/package.service';
 import { BookingService } from '../../services/booking.service';
 import { UserService } from '../../services/user.service';
@@ -30,6 +32,11 @@ function travelDateRangeValidator(control: AbstractControl): ValidationErrors | 
   }
 
   const selectedDate = new Date(value);
+
+  if (Number.isNaN(selectedDate.getTime())) {
+    return { invalidDate: true };
+  }
+
   selectedDate.setHours(0, 0, 0, 0);
 
   const today = new Date();
@@ -62,6 +69,8 @@ function travelDateRangeValidator(control: AbstractControl): ValidationErrors | 
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   templateUrl: './booking-form.html',
   styleUrls: ['./booking-form.css'],
@@ -78,6 +87,12 @@ export class BookingFormComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
 
   readonly travelerOptions = Array.from({ length: 10 }, (_, index) => index + 1);
+  readonly minTravelDate = new Date();
+  readonly maxTravelDate = (() => {
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+    return maxDate;
+  })();
 
   bookingForm: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -165,7 +180,7 @@ export class BookingFormComponent implements OnInit {
       packageName: this.packageData.name,
       destinationName: this.destinationName,
       travelers: Number(this.bookingForm.value.travelers),
-      travelDate: String(this.bookingForm.value.travelDate),
+      travelDate: this.serializeTravelDate(this.bookingForm.value.travelDate),
       totalPrice: this.totalPrice,
       specialRequests: String(this.bookingForm.value.specialRequests || '').trim(),
       status: 'confirmed',
@@ -201,5 +216,18 @@ export class BookingFormComponent implements OnInit {
     }
 
     this.router.navigate(['/package', this.packageData.id, 'overview']);
+  }
+
+  private serializeTravelDate(value: unknown): string {
+    if (value instanceof Date) {
+      return value.toISOString().slice(0, 10);
+    }
+
+    const parsedDate = new Date(String(value));
+    if (!Number.isNaN(parsedDate.getTime())) {
+      return parsedDate.toISOString().slice(0, 10);
+    }
+
+    return String(value);
   }
 }
